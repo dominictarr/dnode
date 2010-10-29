@@ -4,6 +4,8 @@ var DNode = require('dnode')
 exports.simple = function (assert) {
     var port = Math.floor(Math.random() * 40000 + 10000);
     
+//    DNode({}).listen(6060)
+    
     var server = DNode({
         timesTen : function (n,reply) {
             assert.equal(n.number, 5);

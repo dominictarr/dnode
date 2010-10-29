@@ -1,5 +1,10 @@
 //parse-args.asynct.js
 
+if (module == require.main) {
+  require('async_testing').run(__filename, process.ARGV);
+}
+
+
 var parseArgs = require('../../lib/parse_args')
 
 exports['test string'] = function (test){
@@ -8,6 +13,7 @@ exports['test string'] = function (test){
    test.deepEqual(pa(['hello']), {'greeting':'hello'})   
    test.finish();
 }
+
 exports['test several types'] = function (test){
   var rule = {
     'string': 'greeting'
@@ -52,10 +58,21 @@ exports['test multiple strings'] = function (test){
   test.finish()
 
 }
-
-
-
-if (module == require.main) {
-  require('async_testing').run(__filename, process.ARGV);
+exports['test with function arguments'] = function (test){
+  var pa = parseArgs(
+    { 'string':'name'
+    , 'number':'number'
+    , 'boolean':'bool'
+  });
+  function callme(){
+    return pa(arguments)
+  }
+  test.deepEqual(callme(32523,"who",true),
+    { 'name':'who'
+    , 'number':32523
+    , 'bool':true
+    });
+  test.finish()
 }
+
 

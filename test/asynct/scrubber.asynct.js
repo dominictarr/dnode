@@ -144,7 +144,12 @@ exports['test self referential arguments'] = function (test){
 	test.deepEqual(r,expected);
 	test.finish();
 }
+/*
+this is enough for now, later might want to allow multiple args with the 
+same type,i.e. based on order. but this is enough for now.
 
+or a catch-all 'any' which uses a list of functions to get the name,
+*/
 if (module == require.main) {
   require('async_testing').run(__filename, process.ARGV);
 }

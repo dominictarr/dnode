@@ -10,13 +10,13 @@ exports.ping = function (assert) {
     
     var pings = [];
     var timeouts = [];
-    
+    var tm_id
+    var iv = null;
     server.on('ready', function () {
         DNode.connect(
-            port, { ping : 100, timeout : 50 },
+            port, true, //{ ping : 100, timeout : 50 },
             function (remote, conn) {
-                var iv = null;
-                setTimeout(function () {
+               setTimeout(function () {
                     iv = setInterval(function () { remote.busy() }, 20);
                 }, 300);
                 
@@ -32,6 +32,7 @@ exports.ping = function (assert) {
                         });
                         
                         clearInterval(iv);
+                        clearTimeout(tm_id);
                         server.end();
                     }
                 });
@@ -43,5 +44,10 @@ exports.ping = function (assert) {
             }
         );
     });
+    tm_id  =setTimeout(function(){
+      server.end();
+      clearInterval(iv);
+      throw new Error("server did not ping");
+    },2000);
 };
 

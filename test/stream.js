@@ -9,10 +9,11 @@ exports.stream = function (assert) {
         meow : function f (g) { g('cats') }
     });
     
-    var netServer = net.createServer(function (stream) {
+    var netServer = net.createServer(function (stream) {//does this work in v0.3.0?
         server.withStream(stream);
         setTimeout(function () { stream.end() }, 200);
     })
+
     netServer.listen(port, 'localhost');
     
     var netClient = net.createConnection(port);

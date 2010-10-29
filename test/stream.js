@@ -2,6 +2,11 @@ var DNode = require('dnode');
 var net = require('net');
 var sys = require('sys');
 
+/*
+  this test errors with node v0.3.0
+  but works in v0.2.3
+*/
+
 exports.stream = function (assert) {
     var port = Math.floor(Math.random() * 40000 + 10000);
     
@@ -9,7 +14,7 @@ exports.stream = function (assert) {
         meow : function f (g) { g('cats') }
     });
     
-    var netServer = net.createServer(function (stream) {//does this work in v0.3.0?
+    var netServer = net.createServer(function (stream) {
         server.withStream(stream);
         setTimeout(function () { stream.end() }, 200);
     })

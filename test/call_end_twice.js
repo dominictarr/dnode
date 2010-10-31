@@ -8,11 +8,10 @@ var DNode = require('dnode')
 
 exports.simple = function (assert) {
     var port = Math.floor(Math.random() * 40000 + 10000);
-    
-//    DNode({}).listen(6060)
+    var ended = false
     
     var server = DNode({
-        handshake : handshake
+        handshake : onHandshake
     }).listen(port);
     
     server.on('ready', function () {
@@ -23,15 +22,20 @@ exports.simple = function (assert) {
     });
     server.on('localError',onError)
     server.on('remoteError',onError)
-    
+    server.on('end',onEnd)
+
     function onError(error){
       process.nextTick(function(){
         throw error;
       });
     }
-    function handshake(){
+    function onHandshake(){
       server.end();
+      assert.ok(ended,'expected end event to be emited immediately after calling close');
       server.end();
       assert.ok(true,"server should have ended properly")
+    }
+    function onEnd(){
+      ended = true;    
     }
 };

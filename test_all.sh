@@ -20,6 +20,7 @@ expresso test/single.js
 expresso test/stream.js
 expresso test/unicode.js
 expresso test/webevent.js
+expresso test/call_end_twice.js
 node test/asynct/error.asynct.js
 node test/asynct/parse_args.asynct.js
 node test/asynct/scrubber.asynct.js
